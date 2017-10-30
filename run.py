@@ -39,12 +39,14 @@ def check_valid(neural_net):
 quantities = ['Iteration', 'Train_Accuracy', 'Valid_Accuracy', 'Loss']
 train_logs = nl.Logger(*quantities)
 
+num_examples = len(X)
+print('num_examples: {}'.format(num_examples))
 for i in range(10001):
     my_net.feed(X, Y)
     probabilties, loss = my_net.forward()
     d_loss_input = my_net.backward()
     if i % 100 == 0:
-        avg_loss = np.sum(loss)/150
+        avg_loss = np.sum(loss)/num_examples
         predicted_class = np.argmax(probabilties, axis=1)
         ground_truth = np.argmax(Y, axis=1)
         train_accuracy = np.mean(predicted_class == ground_truth)
@@ -53,7 +55,7 @@ for i in range(10001):
 
         train_logs.log(Iteration=i, Train_Accuracy=train_accuracy, Valid_Accuracy=valid_accuracy, Loss=avg_loss)
 
-        print('Iteration {}: loss {:6.3f} train accuracy {:7.3f} valid accuracy {:7.3f}'.format(i, avg_loss, train_accuracy, valid_accuracy))
+        print('Iteration {:10}: loss {:6.3f} train accuracy {:7.3f} valid accuracy {:7.3f}'.format(i, avg_loss, train_accuracy, valid_accuracy))
 
 print('\n\nFinished Training\n')
 train_logs.printlog()
