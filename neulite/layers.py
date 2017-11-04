@@ -60,7 +60,7 @@ class ReluLayer(Layer):
     def __init__(self, dim_h):
         self.outputs = None
         self.inputs = None
-        self.weights = 0
+        self.weights = 0  # to bypass regularisation (e.g. L2)
         self.n_h = dim_h
 
     def init(self, dim_input, lr, reg_lambda):
@@ -73,3 +73,26 @@ class ReluLayer(Layer):
     def backward(self, del_loss):
         drelu = np.where(self.inputs > 0, del_loss, 0)
         return drelu
+
+
+class DropoutLayer(Layer):
+    def __init__(self, dim_h, keep_prob=1.0):
+        self.outputs = None
+        self.inputs = None
+        self.weights = 0  # to bypass regularisation (e.g. L2)
+        self.n_h = dim_h
+        self.keep_prob = keep_prob
+        self.keep_mask = None
+
+    def init(self, dim_input, lr, reg_lambda):
+        pass
+
+    def forward(self):
+        # inverted dropout, to prevent scaling output at test time, 1 / keep_prob
+        self.keep_mask = (np.random.uniform(0., 1., self.n_h) < self.keep_prob) / self.keep_prob
+        self.outputs = self.inputs * self.keep_mask
+        return self.outputs
+
+    def backward(self, del_loss):
+        d_drop = del_loss * self.keep_mask
+        return d_drop

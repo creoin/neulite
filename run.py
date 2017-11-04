@@ -23,6 +23,7 @@ my_net.set_cost(nl.SoftmaxCrossEntropyLoss())
 
 my_net.add_layer(nl.FCLayer(100))
 my_net.add_layer(nl.ReluLayer(100))
+my_net.add_layer(nl.DropoutLayer(100, keep_prob=0.7))
 my_net.add_layer(nl.FCLayer(3))
 
 # Validation check on neural net
