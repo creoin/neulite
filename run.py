@@ -28,12 +28,16 @@ my_net.add_layer(nl.FCLayer(3))
 
 # Validation check on neural net
 def check_valid(neural_net):
+    neural_net.set_test_mode()
+
     neural_net.feed(X_valid, Y_valid)
     valid_prob, valid_loss = neural_net.forward()
 
     predicted_class = np.argmax(valid_prob, axis=1)
     ground_truth = np.argmax(Y_valid, axis=1)
     valid_accuracy = np.mean(predicted_class == ground_truth)
+
+    neural_net.set_train_mode()
     return valid_accuracy
 
 # Set up a logger for the training data we want to record
@@ -46,7 +50,7 @@ for i in range(10001):
     my_net.feed(X, Y)
     probabilties, loss = my_net.forward()
     d_loss_input = my_net.backward()
-    if i % 100 == 0:
+    if i % 1000 == 0:
         avg_loss = np.sum(loss)/num_examples
         predicted_class = np.argmax(probabilties, axis=1)
         ground_truth = np.argmax(Y, axis=1)

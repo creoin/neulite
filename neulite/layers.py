@@ -23,6 +23,12 @@ class Layer(object):
     def backward(self):
         raise NotImplementedError
 
+    def set_test_mode(self):
+        pass
+
+    def set_train_mode(self):
+        pass
+
 class FCLayer(Layer):
     def __init__(self, dim_h):
         self.biases  = np.random.random((1, dim_h))*0.1
@@ -82,6 +88,7 @@ class DropoutLayer(Layer):
         self.weights = 0  # to bypass regularisation (e.g. L2)
         self.n_h = dim_h
         self.keep_prob = keep_prob
+        self.save_prob = keep_prob  # remember value to switch back to train mode
         self.keep_mask = None
 
     def init(self, dim_input, lr, reg_lambda):
@@ -96,3 +103,10 @@ class DropoutLayer(Layer):
     def backward(self, del_loss):
         d_drop = del_loss * self.keep_mask
         return d_drop
+
+    def set_test_mode(self):
+        self.save_prob = self.keep_prob
+        self.keep_prob = 1.0
+
+    def set_train_mode(self):
+        self.keep_prob = self.save_prob
