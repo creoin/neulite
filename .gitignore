@@ -5,3 +5,5 @@ __pycache__/
 .coverage
 
 experiment/tmp.csv
+data/task
+data/iris/*.csv

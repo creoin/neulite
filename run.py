@@ -5,9 +5,15 @@ import os
 import csv
 
 # Prepare Dataset
+# Iris Dataset
 filepath = 'data/iris/iris.data'
-data_manager = nl.DataManager((0.7,0.15,0.15))
-data_manager.init_iris(filepath)
+data_manager = nl.IrisData(filepath, (0.7,0.15,0.15))
+
+# Task dataset
+# filepath = 'data/task/task1.csv'
+# data_manager = nl.TaskData(filepath, (0.7,0.15,0.15))
+
+data_manager.init_dataset()
 X, Y = data_manager.prepare_train()
 X_valid, Y_valid = data_manager.prepare_valid()
 
@@ -18,6 +24,7 @@ experiment = 'tmp'
 
 # Build Neural Network
 my_net = nl.NeuralNet(4, lr=1e-1)
+# my_net = nl.NeuralNet(2, lr=1e-1)
 my_net.set_regulariser(nl.L2Regulariser(1e-3))
 my_net.set_cost(nl.SoftmaxCrossEntropyLoss())
 
