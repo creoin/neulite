@@ -5,9 +5,15 @@ import os
 import csv
 
 # Prepare Dataset
+# Iris Dataset
 filepath = 'data/iris/iris.data'
-data_manager = nl.DataManager((0.7,0.15,0.15))
-data_manager.init_iris(filepath)
+data_manager = nl.IrisData(filepath, (0.7,0.15,0.15))
+
+# Task dataset
+# filepath = 'data/task/task1.csv'
+# data_manager = nl.TaskData(filepath, (0.7,0.15,0.15))
+
+data_manager.init_dataset()
 X, Y = data_manager.prepare_train()
 X_valid, Y_valid = data_manager.prepare_valid()
 
@@ -18,21 +24,27 @@ experiment = 'tmp'
 
 # Build Neural Network
 my_net = nl.NeuralNet(4, lr=1e-1)
+# my_net = nl.NeuralNet(2, lr=1e-1)
 my_net.set_regulariser(nl.L2Regulariser(1e-3))
 my_net.set_cost(nl.SoftmaxCrossEntropyLoss())
 
 my_net.add_layer(nl.FCLayer(100))
 my_net.add_layer(nl.ReluLayer(100))
+my_net.add_layer(nl.DropoutLayer(100, keep_prob=0.7))
 my_net.add_layer(nl.FCLayer(3))
 
 # Validation check on neural net
 def check_valid(neural_net):
+    neural_net.set_test_mode()
+
     neural_net.feed(X_valid, Y_valid)
     valid_prob, valid_loss = neural_net.forward()
 
     predicted_class = np.argmax(valid_prob, axis=1)
     ground_truth = np.argmax(Y_valid, axis=1)
     valid_accuracy = np.mean(predicted_class == ground_truth)
+
+    neural_net.set_train_mode()
     return valid_accuracy
 
 # Set up a logger for the training data we want to record
@@ -45,7 +57,7 @@ for i in range(10001):
     my_net.feed(X, Y)
     probabilties, loss = my_net.forward()
     d_loss_input = my_net.backward()
-    if i % 100 == 0:
+    if i % 1000 == 0:
         avg_loss = np.sum(loss)/num_examples
         predicted_class = np.argmax(probabilties, axis=1)
         ground_truth = np.argmax(Y, axis=1)

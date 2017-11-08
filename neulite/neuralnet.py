@@ -63,3 +63,11 @@ class NeuralNet(object):
 
         self.total_loss = entropy_loss + reg_loss
         return self.total_loss, prob
+
+    def set_test_mode(self):
+        for layer in self.layers:
+            layer.set_test_mode()
+
+    def set_train_mode(self):
+        for layer in self.layers:
+            layer.set_train_mode()
