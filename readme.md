@@ -5,6 +5,16 @@ Numpy to shine some light on how they work.
 
 (For the state of the repository on 27/10/2017, see the `initial commit` branch)
 
+## Clone
+
+Since this repository contains a submodule, you need to use the --recursive flag:
+
+```
+git clone --recursive https://github.com/creoin/neulite.git
+```
+
+This will also download the data_tools repository.
+
 ## How to run
 
 An example has been included in `run.py`, and is explained briefly below.
@@ -12,6 +22,7 @@ From the root directory of the repsitory:
 
 ```
 import neulite as nl
+import data_tools as dt
 ```
 
 ### Setup the data
@@ -20,7 +31,7 @@ Firstly setup the data, the Iris dataset has been included in `data/iris`:
 
 ```
 filepath = 'data/iris/iris.data'
-data_manager = nl.IrisData(filepath, (0.7,0.15,0.15))
+data_manager = dt.IrisData(filepath, (0.7,0.15,0.15))
 data_manager.init_dataset()
 X, Y = data_manager.prepare_train()
 X_valid, Y_valid = data_manager.prepare_valid()
