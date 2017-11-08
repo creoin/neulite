@@ -1,13 +1,14 @@
 import numpy as np
 import neulite as nl
 import os
+import data_tools as dt
 
 import csv
 
 # Prepare Dataset
 # Iris Dataset
 filepath = 'data/iris/iris.data'
-data_manager = nl.IrisData(filepath, (0.7,0.15,0.15))
+data_manager = dt.IrisData(filepath, (0.7,0.15,0.15))
 
 # Task dataset
 # filepath = 'data/task/task1.csv'
