@@ -20,8 +20,8 @@ Firstly setup the data, the Iris dataset has been included in `data/iris`:
 
 ```
 filepath = 'data/iris/iris.data'
-data_manager = nl.DataManager((0.7,0.15,0.15))
-data_manager.init_iris(filepath)
+data_manager = nl.IrisData(filepath, (0.7,0.15,0.15))
+data_manager.init_dataset()
 X, Y = data_manager.prepare_train()
 X_valid, Y_valid = data_manager.prepare_valid()
 ```
@@ -42,8 +42,10 @@ Next build up the architecture of the layers:
 ```
 my_net.add_layer(nl.FCLayer(100))
 my_net.add_layer(nl.ReluLayer(100))
+my_net.add_layer(nl.DropoutLayer(100, keep_prob=0.7))
 my_net.add_layer(nl.FCLayer(3))
 ```
+where the numbers correspond to the number of hidden units in the layers. The ReLU and Dropout layers operate on the layer below, so have the same number of units. Here a network of essentially two Fully-Connected (FC) layers is built, one with 100 hidden units and the top with 3 units to match the number of classes.
 
 ### Training
 
