@@ -17,7 +17,7 @@ This will also download the data_tools repository.
 
 ## How to run
 
-An example has been included in `run.py`, and is explained briefly below.
+An example has been included in `run.py`, and is explained briefly below. A walkthrough the code has also been included in the `notebook_task` jupyter notebook.
 From the root directory of the repsitory:
 
 ```
@@ -75,3 +75,29 @@ for i in range(10001):
 
         print('Iteration {:10}: loss {:6.3f} train accuracy {:7.3f}'.format(i, avg_loss, train_accuracy))
 ```
+
+### Example Output
+
+Below is some example output from a Task dataset (not included in repo), which is a simple distribution of 3 classes in 2 coordinates. This example was taken from the `notebook_task` jupyter notebook.
+
+Training progress:
+```
+num_examples: 12000
+Iteration          0: loss  1.059 train accuracy   0.396 valid accuracy   0.373
+Iteration       1000: loss  0.187 train accuracy   0.945 valid accuracy   0.951
+Iteration       2000: loss  0.206 train accuracy   0.941 valid accuracy   0.937
+Iteration       3000: loss  0.192 train accuracy   0.945 valid accuracy   0.936
+Iteration       4000: loss  0.185 train accuracy   0.945 valid accuracy   0.947
+Iteration       5000: loss  0.175 train accuracy   0.948 valid accuracy   0.953
+Iteration       6000: loss  0.174 train accuracy   0.949 valid accuracy   0.959
+Iteration       7000: loss  0.189 train accuracy   0.942 valid accuracy   0.955
+Iteration       8000: loss  0.175 train accuracy   0.948 valid accuracy   0.959
+Iteration       9000: loss  0.169 train accuracy   0.950 valid accuracy   0.957
+Iteration      10000: loss  0.167 train accuracy   0.950 valid accuracy   0.957
+```
+
+Training and Validation Accuracy:
+![Training and Validation accuracy for a Task dataset](img/task_training_accuracy.png "Training and Validation accuracy for a Task dataset")
+
+Training Loss:
+![Training Loss for a Task dataset](img/task_training_loss.png "Training and Validation accuracy for a Task dataset")

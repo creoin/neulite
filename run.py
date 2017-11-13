@@ -12,7 +12,7 @@ data_manager = dt.IrisData(filepath, (0.7,0.15,0.15))
 
 # Task dataset
 # filepath = 'data/task/task1.csv'
-# data_manager = nl.TaskData(filepath, (0.7,0.15,0.15))
+# data_manager = dt.TaskData(filepath, (0.7,0.10,0.10))
 
 data_manager.init_dataset()
 X, Y = data_manager.prepare_train()
