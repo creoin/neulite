@@ -97,7 +97,9 @@ Iteration      10000: loss  0.167 train accuracy   0.950 valid accuracy   0.957
 ```
 
 Training and Validation Accuracy:
+
 ![Training and Validation accuracy for a Task dataset](img/task_training_accuracy.png "Training and Validation accuracy for a Task dataset")
 
 Training Loss:
+
 ![Training Loss for a Task dataset](img/task_training_loss.png "Training and Validation accuracy for a Task dataset")
